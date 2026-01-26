@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { Project } from '@/lib/data';
@@ -57,6 +57,16 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const featured = projects.slice(0, 5);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "center center"]
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
+    const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
+
     // Auto-rotate
     useEffect(() => {
         const timer = setInterval(() => {
@@ -78,8 +88,11 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
     const theme = THEMES[currentIndex % THEMES.length];
 
     return (
-        <section className="relative w-full py-16 px-4 md:px-0 bg-[#050505] overflow-hidden">
-            <div className="max-w-7xl mx-auto md:px-6 lg:px-8">
+        <section ref={containerRef} className="relative w-full py-16 px-4 md:px-0 bg-[#050505] overflow-hidden">
+            <motion.div
+                style={{ scale, opacity, y }}
+                className="max-w-7xl mx-auto md:px-6 lg:px-8"
+            >
                 <div className="flex items-center justify-between mb-8 px-4 md:px-0">
                     <h2 className="font-heading text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                         <span className={`w-2 h-2 rounded-full ${theme.button}`}></span>
@@ -177,7 +190,7 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
                         ))}
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 }

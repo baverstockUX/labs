@@ -45,7 +45,7 @@ export default function Home() {
         >
           <div>
             <h2 className="font-heading text-3xl font-bold text-white mb-2">All Experiments</h2>
-            <p className="text-white/50">Explore the full archive of prototypes.</p>
+            <p className="text-white/50">Explore the latest submitted prototypes.</p>
           </div>
           {/* Future: Add filters here */}
         </motion.div>
@@ -62,6 +62,12 @@ export default function Home() {
               <ProjectCard project={project} index={index + 5} />
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <button className="px-8 py-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-white font-medium hover:scale-105 active:scale-95">
+            View Gallery
+          </button>
         </div>
       </section>
 
