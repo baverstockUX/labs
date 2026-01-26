@@ -9,7 +9,7 @@ const config: Config = {
         extend: {
             fontFamily: {
                 sans: ["var(--font-inter)", "sans-serif"],
-                heading: ["var(--font-fraunces)", "serif"],
+                heading: ["var(--font-montserrat)", "sans-serif"],
             },
             colors: {
                 background: "var(--color-background)",
