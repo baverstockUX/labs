@@ -6,6 +6,7 @@ import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { ProjectCard } from '@/components/ProjectCard';
 import { Footer } from '@/components/Footer';
+import { FeaturedCarousel } from '@/components/FeaturedCarousel';
 import { projects } from '@/lib/data';
 
 export default function Home() {
@@ -21,6 +22,8 @@ export default function Home() {
     ["#050505", "#101C36", "#050505"]
   );
 
+  const gridProjects = projects.slice(5);
+
   return (
     <motion.main
       ref={containerRef}
@@ -30,6 +33,9 @@ export default function Home() {
       <Navbar />
       <Hero />
 
+      {/* Featured Marquee Section */}
+      <FeaturedCarousel projects={projects} />
+
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -38,14 +44,14 @@ export default function Home() {
           className="flex items-center justify-between mb-12 border-b border-white/10 pb-6"
         >
           <div>
-            <h2 className="font-heading text-3xl font-bold text-white mb-2">Vibrant Alphas</h2>
-            <p className="text-white/50">Fresh from the lab. Ready for your input.</p>
+            <h2 className="font-heading text-3xl font-bold text-white mb-2">All Experiments</h2>
+            <p className="text-white/50">Explore the full archive of prototypes.</p>
           </div>
           {/* Future: Add filters here */}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {gridProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 50 }}
@@ -53,7 +59,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <ProjectCard project={project} index={index} />
+              <ProjectCard project={project} index={index + 5} />
             </motion.div>
           ))}
         </div>
