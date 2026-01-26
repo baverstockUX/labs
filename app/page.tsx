@@ -41,34 +41,64 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex items-center justify-between mb-12 border-b border-white/10 pb-6"
+          className="flex items-center justify-between mb-16 border-b border-white/10 pb-6"
         >
           <div>
-            <h2 className="font-heading text-3xl font-bold text-white mb-2">All Experiments</h2>
-            <p className="text-white/50">Explore the latest submitted prototypes.</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-black text-white mb-3 tracking-tight">
+              All Experiments
+            </h2>
+            <p className="text-white/40 text-lg">Explore the latest submitted prototypes.</p>
           </div>
           {/* Future: Add filters here */}
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {gridProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <ProjectCard project={project} index={index + 5} />
-            </motion.div>
-          ))}
+        {/* Broken Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-auto">
+          {gridProjects.map((project, index) => {
+            // Define variant pattern: wide, square, tall, square, square, compact, tall, square
+            const variantPattern: Array<'wide' | 'tall' | 'square' | 'compact'> = [
+              'wide',    // 0
+              'square',  // 1
+              'tall',    // 2
+              'square',  // 3
+              'square',  // 4
+              'compact', // 5
+              'tall',    // 6
+              'square',  // 7
+            ];
+
+            const variant = variantPattern[index % variantPattern.length];
+
+            // Add vertical offset for staggered effect
+            const offsetClass = index % 3 === 0 ? 'lg:translate-y-8' :
+                               index % 3 === 1 ? 'lg:-translate-y-4' : '';
+
+            return (
+              <div
+                key={project.id}
+                className={`${offsetClass} transition-transform duration-300`}
+              >
+                <ProjectCard
+                  project={project}
+                  index={index + 5}
+                  variant={variant}
+                />
+              </div>
+            );
+          })}
         </div>
 
-        <div className="mt-12 flex justify-center">
-          <button className="px-8 py-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-white font-medium hover:scale-105 active:scale-95">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 flex justify-center"
+        >
+          <button className="group px-10 py-4 rounded-full border-2 border-white/10 bg-white/5 hover:bg-tangerine hover:border-tangerine transition-all text-white font-heading font-bold text-lg hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-tangerine/20">
             View Gallery
+            <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
           </button>
-        </div>
+        </motion.div>
       </section>
 
       <Footer />
