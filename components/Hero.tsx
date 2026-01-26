@@ -1,11 +1,28 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ConnectedPointsBackground } from './ConnectedPointsBackground';
 
 export function Hero() {
     return (
         <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#050505]">
+            {/* Hero Background Image (Right) */}
+            <div className="absolute top-0 right-0 w-full md:w-2/3 h-full z-[1] pointer-events-none opacity-50 mix-blend-screen">
+                <div className="relative w-full h-full">
+                    <Image
+                        src="/background.png"
+                        alt=""
+                        fill
+                        className="object-cover object-center md:object-left"
+                        style={{
+                            maskImage: 'radial-gradient(circle at center, black 20%, transparent 70%)',
+                            WebkitMaskImage: 'radial-gradient(circle at center, black 20%, transparent 70%)'
+                        }}
+                    />
+                </div>
+            </div>
+
             {/* Interactive Canvas Background */}
             <ConnectedPointsBackground />
 
