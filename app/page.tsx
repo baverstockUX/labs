@@ -6,7 +6,6 @@ import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { ProjectCard } from '@/components/ProjectCard';
 import { Footer } from '@/components/Footer';
-import { MouseBackground } from '@/components/MouseBackground';
 import { projects } from '@/lib/data';
 
 export default function Home() {
@@ -28,7 +27,6 @@ export default function Home() {
       style={{ backgroundColor }}
       className="min-h-screen text-foreground selection:bg-tangerine selection:text-white relative"
     >
-      <MouseBackground />
       <Navbar />
       <Hero />
 
