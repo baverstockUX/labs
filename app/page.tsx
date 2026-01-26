@@ -52,35 +52,26 @@ export default function Home() {
           {/* Future: Add filters here */}
         </motion.div>
 
-        {/* Broken Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-auto">
+        {/* Masonry Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min">
           {gridProjects.map((project, index) => {
-            // Define variant pattern: wide, square, tall, square, square, compact, tall, square
-            const variantPattern: Array<'wide' | 'tall' | 'square' | 'compact'> = [
-              'wide',    // 0
-              'square',  // 1
-              'tall',    // 2
-              'square',  // 3
-              'square',  // 4
-              'compact', // 5
-              'tall',    // 6
-              'square',  // 7
+            // Simplified variant pattern for masonry layout
+            const variantPattern: Array<'square' | 'tall' | 'compact'> = [
+              'square',   // 0
+              'tall',     // 1
+              'compact',  // 2
+              'square',   // 3
+              'square',   // 4
+              'compact',  // 5
             ];
 
             const variant = variantPattern[index % variantPattern.length];
 
-            // Add vertical offset for staggered effect
-            const offsetClass = index % 3 === 0 ? 'lg:translate-y-8' :
-                               index % 3 === 1 ? 'lg:-translate-y-4' : '';
-
             return (
-              <div
-                key={project.id}
-                className={`${offsetClass} transition-transform duration-300`}
-              >
+              <div key={project.id}>
                 <ProjectCard
                   project={project}
-                  index={index + 5}
+                  index={index}
                   variant={variant}
                 />
               </div>

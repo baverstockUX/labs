@@ -7,6 +7,11 @@ const JWT_SECRET = new TextEncoder().encode(
 )
 
 export async function middleware(request: NextRequest) {
+  // Skip authentication in development mode
+  if (process.env.NODE_ENV === 'development') {
+    return NextResponse.next()
+  }
+
   const token = request.cookies.get('site-access')?.value
 
   // Check if we are on the login page
