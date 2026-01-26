@@ -46,7 +46,7 @@ const THEMES = [
 export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
-    const featured = projects.slice(0, 5);
+    const featured = projects;
 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -74,7 +74,7 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
         mouseY.set(e.clientY - centerY);
     };
 
-    const handleDragEnd = (_: any, info: PanInfo) => {
+    const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         setIsDragging(false);
         if (Math.abs(info.offset.x) > 100) {
             if (info.offset.x > 0) {
@@ -101,7 +101,7 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
                         Featured Alphas
                     </h2>
 
-                    <div className="font-heading text-white/40 text-sm tracking-wider">
+                    <div className="font-heading text-white/40 text-sm tracking-wider transition-colors duration-700">
                         <span className="text-white text-2xl font-bold">
                             {String(currentIndex + 1).padStart(2, '0')}
                         </span>
@@ -118,16 +118,17 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
                         perspective: '2000px'
                     }}
                 >
-                    <AnimatePresence initial={false}>
+                    <AnimatePresence mode="sync">
                         {featured.map((project, index) => {
                             const offset = (index - currentIndex + featured.length) % featured.length;
                             const isActive = offset === 0;
-                            const isVisible = offset <= 2;
+                            const isVisible = offset <= 3;
 
                             if (!isVisible) return null;
 
                             return (
                                 <motion.div
+                                    layout
                                     key={project.id}
                                     drag={isActive ? "x" : false}
                                     dragConstraints={{ left: 0, right: 0 }}
@@ -147,9 +148,14 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
                                         x: offset * 25,
                                         y: offset * 15,
                                     }}
+                                    exit={{
+                                        opacity: 0,
+                                        scale: 0.8,
+                                        transition: { duration: 0.8 }
+                                    }}
                                     transition={{
-                                        duration: 0.6,
-                                        ease: [0.32, 0.72, 0, 1]
+                                        layout: { duration: 1.8, ease: [0.25, 0.1, 0.25, 1] },
+                                        default: { duration: 1.8, ease: [0.25, 0.1, 0.25, 1] }
                                     }}
                                     style={{
                                         rotateX: isActive ? rotateX : 0,
@@ -181,7 +187,7 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
                                             <motion.div
                                                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                                                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                                                transition={{ delay: 0.2 }}
+                                                transition={{ delay: 0.15, duration: 0.5 }}
                                                 className="absolute top-8 right-8"
                                             >
                                                 <div className={`px-4 py-2 rounded-full border ${theme.glow} border-current backdrop-blur-xl bg-white/5`}>
@@ -194,7 +200,7 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
                                             <motion.div
                                                 initial={{ opacity: 0, x: 20 }}
                                                 animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 0.3 }}
+                                                transition={{ delay: 0.2, duration: 0.6 }}
                                                 className="relative z-10 space-y-6"
                                             >
                                                 <h3 className="font-heading text-4xl md:text-6xl font-black text-white leading-[0.95] tracking-tight">
