@@ -1,6 +1,10 @@
 'use server'
 
-export async function submitIdea(prevState: any, formData: FormData) {
+interface State {
+    message: string;
+}
+
+export async function submitIdea(prevState: State, formData: FormData) {
     const title = formData.get('title');
     const description = formData.get('description');
     const name = formData.get('name');

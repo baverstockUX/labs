@@ -34,7 +34,7 @@ export default function Home() {
       <Hero />
 
       {/* Featured Marquee Section */}
-      <FeaturedCarousel projects={projects} />
+      <FeaturedCarousel projects={projects.slice(0, 5)} />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <motion.div

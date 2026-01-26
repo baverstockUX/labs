@@ -15,7 +15,7 @@ export function ConnectedPointsBackground() {
 
         let width = window.innerWidth;
         let height = window.innerHeight;
-        let target = { x: width / 2, y: height / 2 };
+        const target = { x: width / 2, y: height / 2 };
         let points: Point[] = [];
         let animationFrameId: number;
 
@@ -92,6 +92,10 @@ export function ConnectedPointsBackground() {
             }
         }
 
+        const getDistance = (p1: Point | { x: number, y: number }, p2: Point | { x: number, y: number }) => {
+            return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2;
+        };
+
         const initHeader = () => {
             setSize();
             points = [];
@@ -110,11 +114,9 @@ export function ConnectedPointsBackground() {
             }
 
             // Find 5 closest points
-            for (let i = 0; i < points.length; i++) {
-                let closest: Point[] = [];
-                let p1 = points[i];
-                for (let j = 0; j < points.length; j++) {
-                    let p2 = points[j];
+            for (const p1 of points) {
+                const closest: Point[] = [];
+                for (const p2 of points) {
                     if (p1 !== p2) {
                         let placed = false;
                         for (let k = 0; k < 5; k++) {
@@ -140,56 +142,50 @@ export function ConnectedPointsBackground() {
             }
 
             // Assign circles
-            for (let i in points) {
-                const c = new Circle(points[i], 2 + Math.random() * 2, 'rgba(255,255,255,0.3)');
-                points[i].circle = c;
+            for (const p of points) {
+                const c = new Circle(p, 2 + Math.random() * 2, 'rgba(255,255,255,0.3)');
+                p.circle = c;
             }
         };
 
-        const getDistance = (p1: Point | { x: number, y: number }, p2: Point | { x: number, y: number }) => {
-            return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
+        const drawLines = (p: Point) => {
+            if (!p.active || !ctx) return;
+            for (const closestPoint of p.closest) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(closestPoint.x, closestPoint.y);
+                // Coral Red lines with opacity
+                ctx.strokeStyle = `rgba(255, 60, 54, ${p.active})`;
+                ctx.stroke();
+            }
         };
 
         const animate = () => {
             if (!ctx) return;
             ctx.clearRect(0, 0, width, height);
 
-            for (let i in points) {
-                const p = points[i];
-
+            for (const p of points) {
                 // Detect points in range of mouse
                 const dist = Math.abs(getDistance(target, p));
                 if (dist < 4000) {
                     p.active = 0.3;
-                    p.circle!.active = 0.6;
+                    if (p.circle) p.circle.active = 0.6;
                 } else if (dist < 20000) {
                     p.active = 0.1;
-                    p.circle!.active = 0.3;
+                    if (p.circle) p.circle.active = 0.3;
                 } else if (dist < 40000) {
                     p.active = 0.02;
-                    p.circle!.active = 0.1;
+                    if (p.circle) p.circle.active = 0.1;
                 } else {
                     p.active = 0;
-                    p.circle!.active = 0;
+                    if (p.circle) p.circle.active = 0;
                 }
 
                 drawLines(p);
-                p.circle!.draw();
+                if (p.circle) p.circle.draw();
                 p.update(); // Native animation update
             }
             animationFrameId = requestAnimationFrame(animate);
-        };
-
-        const drawLines = (p: Point) => {
-            if (!p.active || !ctx) return;
-            for (let i in p.closest) {
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p.closest[i].x, p.closest[i].y);
-                // Coral Red lines with opacity
-                ctx.strokeStyle = `rgba(255, 60, 54, ${p.active})`;
-                ctx.stroke();
-            }
         };
 
         const handleMouseMove = (e: MouseEvent) => {
