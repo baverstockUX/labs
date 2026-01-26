@@ -20,6 +20,22 @@ export function Hero() {
                             WebkitMaskImage: 'radial-gradient(circle at center, black 20%, transparent 70%)'
                         }}
                     />
+                    {/* Pulsing Ember Glow Overlay */}
+                    <motion.div
+                        className="absolute inset-0 bg-radial-gradient from-tangerine/40 via-coral-red/20 to-transparent mix-blend-color-dodge"
+                        animate={{
+                            opacity: [0.3, 0.6, 0.3],
+                            scale: [1, 1.1, 1]
+                        }}
+                        transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        style={{
+                            background: 'radial-gradient(circle at center, rgba(243, 147, 0, 0.5) 0%, rgba(255, 60, 54, 0.2) 30%, transparent 70%)'
+                        }}
+                    />
                 </div>
             </div>
 
