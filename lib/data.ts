@@ -37,7 +37,7 @@ export const projects: Project[] = [
         description: 'Secure communication platform prototyped with post-quantum encryption algorithms for future-proof security.',
         status: 'Beta',
         author: 'Alex Rivera',
-        image: 'https://images.unsplash.com/photo-1544197150-b99a580bbc7c?q=80&w=2670&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=2670&auto=format&fit=crop',
         link_live: '#',
     },
     {
@@ -56,7 +56,7 @@ export const projects: Project[] = [
         description: 'Next-gen video conferencing using detailed holographic projection for immersive remote presence.',
         status: 'Prototype',
         author: 'David Kim',
-        image: 'https://images.unsplash.com/photo-1614728853913-1e2203357642?q=80&w=2670&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop',
     },
     {
         id: '6',

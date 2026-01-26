@@ -131,6 +131,7 @@ export function FeaturedCarousel({ projects }: FeaturedCarouselProps) {
                                     src={currentProject.image}
                                     alt={currentProject.title}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                                 <div className={`absolute inset-0 bg-gradient-to-r ${theme.gradient} opacity-20 mix-blend-overlay`} />

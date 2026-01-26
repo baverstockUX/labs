@@ -14,6 +14,7 @@ export function Hero() {
                         src="/background.png"
                         alt=""
                         fill
+                        priority
                         className="object-cover object-center md:object-left"
                         style={{
                             maskImage: 'radial-gradient(circle at center, black 20%, transparent 70%)',

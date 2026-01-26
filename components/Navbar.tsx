@@ -26,7 +26,7 @@ export function Navbar() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="hidden md:inline text-white/20 text-2xl font-light">|</span>
-                                    <span className="font-heading font-extrabold text-lg tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-tangerine to-coral-red">
+                                    <span className="font-heading font-extrabold text-lg tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-400 pt-1">
                                         IQ Labs
                                     </span>
                                 </div>
